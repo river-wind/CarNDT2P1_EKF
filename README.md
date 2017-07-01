@@ -1,12 +1,14 @@
-#Extended Kalman Filter Project 1
+###Extended Kalman Filter Project 1
  
 Self-Driving Car Engineer Nanodegree Program
 [![Udacity - Self-Driving Car NanoDegree](https://s3.amazonaws.com/udacity-sdc/github/shield-carnd.svg)](http://www.udacity.com/drive)
 ---
-##Purpose##
+##Purpose
+
 The purpose of this project is to utilize a kalman filter to estimate the state of a moving object with noisy lidar and radar measurements. Passing the project requires obtaining RMSE values that are lower that the tolerance outlined in the project rubric, .11, .11, .52, .52. 
 
-**Setup**
+##Setup
+
 Running the code and finding the RMSE values requires use of the Term 2 Simulator which can be downloaded [here](https://github.com/udacity/self-driving-car-sim/releases).  I used the Windows simulator build, though the code should be platform agnostic, and perform similarly on any host OS.
 
 This repository includes two files to set up and install [uWebSocketIO](https://github.com/uWebSockets/uWebSockets) on either osx or linux, which is required for the simulator to communicate with the project code.  Once the install for uWebSocketIO is complete, the main program can be built and run by doing the following from the project top directory.
