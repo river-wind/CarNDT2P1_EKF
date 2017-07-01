@@ -1,13 +1,16 @@
-###Extended Kalman Filter Project 1
+# Extended Kalman Filter Project 1
+---
  
 Self-Driving Car Engineer Nanodegree Program
 [![Udacity - Self-Driving Car NanoDegree](https://s3.amazonaws.com/udacity-sdc/github/shield-carnd.svg)](http://www.udacity.com/drive)
+  
 ---
-##Purpose
+
+## Purpose
 
 The purpose of this project is to utilize a kalman filter to estimate the state of a moving object with noisy lidar and radar measurements. Passing the project requires obtaining RMSE values that are lower that the tolerance outlined in the project rubric, .11, .11, .52, .52. 
 
-##Setup
+## Setup
 
 Running the code and finding the RMSE values requires use of the Term 2 Simulator which can be downloaded [here](https://github.com/udacity/self-driving-car-sim/releases).  I used the Windows simulator build, though the code should be platform agnostic, and perform similarly on any host OS.
 
@@ -34,12 +37,12 @@ OUTPUT: values provided by the c++ program to the simulator
 "rmse_vx"  
 "rmse_vy"  
 
-##Simulator Output
+## Simulator Output
 
 <img src="EKFProjectOutput2.png" width="480" alt="Main Output Image" />  
 This image shows the completed run of the Kalman Filter against the simulator, showing the complete figure 7 shape.
-
-##Other Important Dependencies
+  
+## Other Important Dependencies
 
 * cmake >= 3.5
   * All OSes: [click here for installation instructions](https://cmake.org/install/)
@@ -72,37 +75,37 @@ Other areas of the code, namely kalman_filter.cpp's UpdateEKF() function require
 
 The project Ruberic defines what a passing project should look like.  I will review each of the Rubric points here individually.
 
-###Your code should compile: Code must compile without errors with cmake and make.
+### Your code should compile: Code must compile without errors with cmake and make.
 
 The code compiles without error using cmake and make.
 
-###px, py, vx, vy output coordinates must have an RMSE <= [.11, .11, 0.52, 0.52] for Simulator Dataset 1
+### px, py, vx, vy output coordinates must have an RMSE <= [.11, .11, 0.52, 0.52] for Simulator Dataset 1
 
 RMSE values of 0.0973, 0.0855, 0.4513, 0.4399 were observed during testing, below the threshold target.
 
-###Your Sensor Fusion algorithm follows the general processing flow as taught in the preceding lessons.
+### Your Sensor Fusion algorithm follows the general processing flow as taught in the preceding lessons.
 
 The code uses the same struture as the lesson code, initializing the internal state, predicting positions, updating internal state based on new measurements, handling both RADAR and laser input types, and repeating that process so long as data is received..
 
-###Your Kalman Filter algorithm handles the first measurements appropriately.
+### Your Kalman Filter algorithm handles the first measurements appropriately.
 
 When accepting an initial measurement of type laser, the kalman filter is initialized with those measurements directly.  When the initial measurement is of type RADAR, the kalman filter is initialized with a modified version of the measurements, translating the RADAR datum's distance and position into x and y coordinates to match the format of the laser data.
 
 The code also attempts to catch any 0 or close to 0 values prior to performing divisions, so that div by 0 errors can be avoided.
 
-###Your Kalman Filter algorithm first predicts then updates.
+### Your Kalman Filter algorithm first predicts then updates.
 
 Following the structure of earlier lesson code, the algorithm predicts positions first, then updates the state data with the new measurement information.
 
-###Your Kalman Filter can handle radar and lidar measurements.
+### Your Kalman Filter can handle radar and lidar measurements.
 
 After the initialization, laser and RADAR measurements are both handled, with slight differences depending on which data type is received.  Laser data is handled just as it was for the non"extended" Kalman Filter, whereas the RADAR data is handled a bit differently.  Because the RADAR data comes in using polar coordinates, the Kalman Filter update step (method updateEKF()) translates the data to cartesian, altering the H matrix into a modified form Hj, and Using Fj in place of F (u is considered to be 0).  
 
-###Your algorithm should avoid unnecessary calculations.
+### Your algorithm should avoid unnecessary calculations.
 
 In a few places, a calculation is needed more than once.  Rather than wasting CPU cycles recalculated the result each time it is needed, a temporary holding variable is used.  The value is calculated once, then referenced multiple times.  An example of this is in kalmann_filter.cpp, where the transpose of matrix H_ is needed 2 times in the subsequent lines.  Rather than call H_.transpose() twice, I have calculated the value once and stored it in variable Ht, referencing Ht both times.  Similarly, then the size of ekf_.x_ is needed to build an Identity matrix of the same size, I calculate the size of x_ once, store it in xsize, and reference that to build the identity matrix I on the next line.
 
-##Other thoughts.
+## Other thoughts.
 
 On the initial test run, I encountered a Segmentation Fault error which killed the ExtendedKF program.  After some debugging, it turned out that the ekf_ object instance's Q_ matrix was not being initialized in the same way as it had been in the lesson code.  By adding a declaration line right before assigning a value to that matrix, the error was fixed.
 
