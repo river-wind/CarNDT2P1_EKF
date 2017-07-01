@@ -2,6 +2,8 @@
 Self-Driving Car Engineer Nanodegree Program
 [![Udacity - Self-Driving Car NanoDegree](https://s3.amazonaws.com/udacity-sdc/github/shield-carnd.svg)](http://www.udacity.com/drive)
 
+[image1]: ./EFKProjectOutput2.png "Successfull output"
+[image2]: ./EFKProjectOutput3.png "Angle Problem"
 ---
 #Purpose
 The purpose of this project is to utilize a kalman filter to estimate the state of a moving object with noisy lidar and radar measurements. Passing the project requires obtaining RMSE values that are lower that the tolerance outlined in the project rubric, .11, .11, .52, .52. 
@@ -33,10 +35,9 @@ OUTPUT: values provided by the c++ program to the simulator
 ["rmse_vy"]
 
 ##Simulator Output
-[image1]: ./EFKProjectOutput2.png "Successfull output"
-[image2]: ./EFKProjectOutput3.png "Angle Problem"
 ![alt text][image1]
-This image shows the completed run of the Kalman Filter against the simulator, showing the complete figure 8 shape.
+<img src="EFKProjectOutput2.ppg" width="480" alt="Main Output Image" />
+This image shows the completed run of the Kalman Filter against the simulator, showing the complete figure 7 shape.
 
 ## Other Important Dependencies
 
