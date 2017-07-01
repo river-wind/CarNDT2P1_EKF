@@ -1,6 +1,8 @@
-# Extended Kalman Filter Project 1
+**Extended Kalman Filter Project 1**
 Self-Driving Car Engineer Nanodegree Program
+[![Udacity - Self-Driving Car NanoDegree](https://s3.amazonaws.com/udacity-sdc/github/shield-carnd.svg)](http://www.udacity.com/drive)
 
+---
 ##Purpose
 The purpose of this project is to utilize a kalman filter to estimate the state of a moving object with noisy lidar and radar measurements. Passing the project requires obtaining RMSE values that are lower that the tolerance outlined in the project rubric, .11, .11, .52, .52. 
 
@@ -23,11 +25,11 @@ INPUT: values provided by the simulator to the c++ program
 
 OUTPUT: values provided by the c++ program to the simulator
 
-["estimate_x"] <= kalman filter estimated position x
-["estimate_y"] <= kalman filter estimated position y
-["rmse_x"]
-["rmse_y"]
-["rmse_vx"]
+"estimate_x" <= kalman filter estimated position x
+"estimate_y" <= kalman filter estimated position y
+"rmse_x"
+"rmse_y"
+"rmse_vx"
 ["rmse_vy"]
 
 ##Simulator Output
@@ -35,8 +37,6 @@ OUTPUT: values provided by the c++ program to the simulator
 [image2]: ./EFKProjectOutput3.png "Angle Problem"
 ![alt text][image1]
 This image shows the completed run of the Kalman Filter against the simulator, showing the complete figure 8 shape.
-
----
 
 ## Other Important Dependencies
 
