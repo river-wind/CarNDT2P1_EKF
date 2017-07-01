@@ -2,6 +2,7 @@
 Self-Driving Car Engineer Nanodegree Program
 [![Udacity - Self-Driving Car NanoDegree](https://s3.amazonaws.com/udacity-sdc/github/shield-carnd.svg)](http://www.udacity.com/drive)
 
+[!["alt testing"]("./EKFProjectOutput2.png")]  
 [image1]: ./EKFProjectOutput2.png "Successfull output"
 [image2]: ./EKFProjectOutput3.png "Angle Problem"
 ---
@@ -36,7 +37,7 @@ OUTPUT: values provided by the c++ program to the simulator
 
 ##Simulator Output
 ![alt text][image1]
-<img src="EKFProjectOutput2.ppg" width="480" alt="Main Output Image" />
+<img src="EKFProjectOutput2.png" width="480" alt="Main Output Image" />
 This image shows the completed run of the Kalman Filter against the simulator, showing the complete figure 7 shape.
 
 ## Other Important Dependencies
