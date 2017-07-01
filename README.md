@@ -1,13 +1,13 @@
-# Extended Kalman Filter Project Starter Code
+# Extended Kalman Filter Project 1
 Self-Driving Car Engineer Nanodegree Program
 
-In this project you will utilize a kalman filter to estimate the state of a moving object of interest with noisy lidar and radar measurements. Passing the project requires obtaining RMSE values that are lower that the tolerance outlined in the project rubric. 
+##Purpose
+The purpose of this project is to utilize a kalman filter to estimate the state of a moving object with noisy lidar and radar measurements. Passing the project requires obtaining RMSE values that are lower that the tolerance outlined in the project rubric, .11, .11, .52, .52. 
 
-This project involves the Term 2 Simulator which can be downloaded [here](https://github.com/udacity/self-driving-car-sim/releases)
+##Setup
+Running the code and finding the RMSE values requires use of the Term 2 Simulator which can be downloaded [here](https://github.com/udacity/self-driving-car-sim/releases).  I used the Windows simulator build, though the code should be platform agnostic, and perform similarly on any host OS.
 
-This repository includes two files that can be used to set up and install [uWebSocketIO](https://github.com/uWebSockets/uWebSockets) for either Linux or Mac systems. For windows you can use either Docker, VMware, or even [Windows 10 Bash on Ubuntu](https://www.howtogeek.com/249966/how-to-install-and-use-the-linux-bash-shell-on-windows-10/) to install uWebSocketIO. 
-
-Once the install for uWebSocketIO is complete, the main program can be built and run by doing the following from the project top directory.
+This repository includes two files to set up and install [uWebSocketIO](https://github.com/uWebSockets/uWebSockets) on either osx or linux, which is required for the simulator to communicate with the project code.  Once the install for uWebSocketIO is complete, the main program can be built and run by doing the following from the project top directory.
 
 1. mkdir build
 2. cd build
@@ -15,17 +15,11 @@ Once the install for uWebSocketIO is complete, the main program can be built and
 4. make
 5. ./ExtendedKF
 
-Note that the programs that need to be written to accomplish the project are src/FusionEKF.cpp, src/FusionEKF.h, kalman_filter.cpp, kalman_filter.h, tools.cpp, and tools.h
-
-The program main.cpp has already been filled out, but feel free to modify it.
-
-Here is the main protcol that main.cpp uses for uWebSocketIO in communicating with the simulator.
-
+The main protcol that main.cpp uses for uWebSocketIO in communicating with the simulator is as follows.
 
 INPUT: values provided by the simulator to the c++ program
 
 ["sensor_measurement"] => the measurement that the simulator observed (either lidar or radar)
-
 
 OUTPUT: values provided by the c++ program to the simulator
 
@@ -35,6 +29,12 @@ OUTPUT: values provided by the c++ program to the simulator
 ["rmse_y"]
 ["rmse_vx"]
 ["rmse_vy"]
+
+##Simulator Output
+[image1]: ./EFKProjectOutput2.png "Successfull output"
+[image2]: ./EFKProjectOutput3.png "Angle Problem"
+![alt text][image1]
+This image shows the completed run of the Kalman Filter against the simulator, showing the complete figure 8 shape.
 
 ---
 
@@ -59,60 +59,45 @@ OUTPUT: values provided by the c++ program to the simulator
    * On windows, you may need to run: `cmake .. -G "Unix Makefiles" && make`
 4. Run it: `./ExtendedKF `
 
-## Editor Settings
+## Project Steps
 
-We've purposefully kept editor configuration files out of this repo in order to
-keep it as simple and environment agnostic as possible. However, we recommend
-using the following settings:
+The project purpose is to take in radar and lidar data, handle the two appropriately, and use them to build an internal prediction of the location of a movning object by using the kalman filter method covered in Term 2 of Udacity's Self Driving Car nanodegree.
 
-* indent using spaces
-* set tab width to 2 spaces (keeps the matrices in source code aligned)
+Starter code was provided, with three files incomplete: kalman_filter.cpp, FustionEKF.cpp, and tools.cpp.  The missing code location in each file was marked with a TO DO comment, but the code itself is left up to the student to complete.  Much of the code had been built peice by peice during the prior coding quizes, so some of the work was simply moving that code into place.  For example tools.cpp required two functions be completed: CalculateJacobian() and CalculateRMSE().  Both of these were effectively already done by the time this project was started, so simple moving that quiz code into the file was sufficient to complete tools.cpp.
 
-## Code Style
+Other areas of the code, namely kalman_filter.cpp's UpdateEKF() function required more work.  While the forumlas for the extended version of the update function were displayed during the lectures, translating those formulas into C++ code proved difficult.  Other areas of the code required some refactoring or more robust error checking than the original quiz versions of the same functions.
 
-Please (do your best to) stick to [Google's C++ style guide](https://google.github.io/styleguide/cppguide.html).
+## Ruberic
 
-## Generating Additional Data
+The project Ruberic defines what a passing project should look like.  I will review each of the Rubric points here individually.
 
-This is optional!
+###Your code should compile: Code must compile without errors with cmake and make.
+The code compiles without error using cmake and make.
 
-If you'd like to generate your own radar and lidar data, see the
-[utilities repo](https://github.com/udacity/CarND-Mercedes-SF-Utilities) for
-Matlab scripts that can generate additional data.
+###px, py, vx, vy output coordinates must have an RMSE <= [.11, .11, 0.52, 0.52] for Simulator Dataset 1
+RMSE values of 0.0973, 0.0855, 0.4513, 0.4399 were observed during testing, below the threshold target.
 
-## Project Instructions and Rubric
+###Your Sensor Fusion algorithm follows the general processing flow as taught in the preceding lessons.
+The code uses the same struture as the lesson code, initializing the internal state, predicting positions, updating internal state based on new measurements, handling both RADAR and laser input types, and repeating that process so long as data is received..
 
-Note: regardless of the changes you make, your project must be buildable using
-cmake and make!
+###Your Kalman Filter algorithm handles the first measurements appropriately.
+When accepting an initial measurement of type laser, the kalman filter is initialized with those measurements directly.  When the initial measurement is of type RADAR, the kalman filter is initialized with a modified version of the measurements, translating the RADAR datum's distance and position into x and y coordinates to match the format of the laser data.
 
-More information is only accessible by people who are already enrolled in Term 2
-of CarND. If you are enrolled, see [the project resources page](https://classroom.udacity.com/nanodegrees/nd013/parts/40f38239-66b6-46ec-ae68-03afd8a601c8/modules/0949fca6-b379-42af-a919-ee50aa304e6a/lessons/f758c44c-5e40-4e01-93b5-1a82aa4e044f/concepts/382ebfd6-1d55-4487-84a5-b6a5a4ba1e47)
-for instructions and the project rubric.
+The code also attempts to catch any 0 or close to 0 values prior to performing divisions, so that div by 0 errors can be avoided.
 
-## Hints!
+###Your Kalman Filter algorithm first predicts then updates.
+Following the structure of earlier lesson code, the algorithm predicts positions first, then updates the state data with the new measurement information.
 
-* You don't have to follow this directory structure, but if you do, your work
-  will span all of the .cpp files here. Keep an eye out for TODOs.
+###Your Kalman Filter can handle radar and lidar measurements.
+After the initialization, laser and RADAR measurements are both handled, with slight differences depending on which data type is received.  Laser data is handled just as it was for the non"extended" Kalman Filter, whereas the RADAR data is handled a bit differently.  Because the RADAR data comes in using polar coordinates, the Kalman Filter update step (method updateEKF()) translates the data to cartesian, altering the H matrix into a modified form Hj, and Using Fj in place of F (u is considered to be 0).  
 
-## Call for IDE Profiles Pull Requests
+###Your algorithm should avoid unnecessary calculations.
+In a few places, a calculation is needed more than once.  Rather than wasting CPU cycles recalculated the result each time it is needed, a temporary holding variable is used.  The value is calculated once, then referenced multiple times.  An example of this is in kalmann_filter.cpp, where the transpose of matrix H_ is needed 2 times in the subsequent lines.  Rather than call H_.transpose() twice, I have calculated the value once and stored it in variable Ht, referencing Ht both times.  Similarly, then the size of ekf_.x_ is needed to build an Identity matrix of the same size, I calculate the size of x_ once, store it in xsize, and reference that to build the identity matrix I on the next line.
 
-Help your fellow students!
+##Other thoughts.
+On the initial test run, I encountered a Segmentation Fault error which killed the ExtendedKF program.  After some debugging, it turned out that the ekf_ object instance's Q_ matrix was not being initialized in the same way as it had been in the lesson code.  By adding a declaration line right before assigning a value to that matrix, the error was fixed.
 
-We decided to create Makefiles with cmake to keep this project as platform
-agnostic as possible. Similarly, we omitted IDE profiles in order to we ensure
-that students don't feel pressured to use one IDE or another.
+Once the segmentation fault was resolved, the Simulator output green triangles along the path of the car, denoting the predicted object location.  At one point, when the car passed below 0 on the y axis while travelling its figure 8 path, the predictions (green triangles) veered off widely, only re-converging on the car's path a number of frames later.  After investigation, it turned out that the y calculation step VectorXd y = z - h; was failing when the object was close to 0 on the y scale.  In that case, the value for the second value in Y was multiple times what we needed for it to make sense: something between -pi and pi.  To normalize this value to the range [-pi,pi], I added a line which used the atan2() function to normalize it.
+![alt text][image2]
 
-However! We'd love to help people get up and running with their IDEs of choice.
-If you've created a profile for an IDE that you think other students would
-appreciate, we'd love to have you add the requisite profile files and
-instructions to ide_profiles/. For example if you wanted to add a VS Code
-profile, you'd add:
-
-* /ide_profiles/vscode/.vscode
-* /ide_profiles/vscode/README.md
-
-The README should explain what the profile does, how to take advantage of it,
-and how to install it.
-
-Regardless of the IDE used, every submitted project must
-still be compilable with cmake and make.
+After resolving those two issues, the predictions appeared to follow the main path, and the RMSE was within acceptable thresholds.
