@@ -51,6 +51,7 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
   TODO:
     * update the state by using Extended Kalman Filter equations
   */ 
+  //CEL: update with extended Kalman Filter steps.  handle polar!
   float rho=sqrt(x_(0)*x_(0) + x_(1)*x_(1));
   float phi=atan2(x_(1), x_(0));
   float rho_d;
